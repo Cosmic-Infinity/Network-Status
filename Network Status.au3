@@ -15,6 +15,7 @@
 #include <FontConstants.au3>
 #include <FontConstants.au3>
 #include <GUIConstantsEx.au3>
+#include <GuiEdit.au3>
 
 Global $count = 0
 Global $wifidiag = ""
@@ -130,23 +131,27 @@ Func defineposition()
 
 		Local $size = WinGetPos($installgui)
 
-		Local $installlabel = GUICtrlCreateLabel("Left: ", $size[2]*0.15, $size[3] * 0.15, $size[2]/6.6, $size[3] / 5)
+		Local $installlabel = GUICtrlCreateLabel("Left: ", $size[2]*0.15, $size[3] * 0.10, $size[2]/6.6, $size[3] / 5)
 		GUICtrlSetFont(-1, 10, $FW_EXTRALIGHT, 0, "Segoe UI", 2)
-		Local $lefttx = GUICtrlCreateInput("", $size[2] * 0.3, $size[3] * 0.14, $size[2] * 0.5, $size[3] * 0.15)
+		Local $lefttx = GUICtrlCreateInput("", $size[2] * 0.3, $size[3] * 0.09, $size[2] * 0.5, $size[3] * 0.15, $ES_NUMBER)
 		;GUICtrlSetLimit(-1, 6)
 		GUICtrlSetFont(-1, 10, $FW_EXTRALIGHT, 0, "Segoe UI", 2)
 		GUICtrlSetTip(-1, "Distance of Wi-Fi window from left end of screen")
 
-		Local $installlabel = GUICtrlCreateLabel("Top: ", $size[2]*0.15, $size[3] * 0.35, $size[2]/6.6, $size[3] / 5)
+		Local $installlabel = GUICtrlCreateLabel("Top: ", $size[2]*0.15, $size[3] * 0.30, $size[2]/6.6, $size[3] / 5)
 		GUICtrlSetFont(-1, 10, $FW_EXTRALIGHT, 0, "Segoe UI", 2)
-		Local $toptx = GUICtrlCreateInput("", $size[2] * 0.3, $size[3] * 0.34, $size[2] * 0.5, $size[3] * 0.15)
+		Local $toptx = GUICtrlCreateInput("", $size[2] * 0.3, $size[3] * 0.29, $size[2] * 0.5, $size[3] * 0.15, $ES_NUMBER)
 		;GUICtrlSetLimit(-1, 6)
 		GUICtrlSetFont(-1, 10, $FW_EXTRALIGHT, 0, "Segoe UI", 2)
 		GUICtrlSetTip(-1, "Distance of Wi-Fi window from top of the screen")
 
 
 
-		Local $installok = GUICtrlCreateButton("OK", $size[2] * 0.45, $size[3] * 0.55, $size[2] * 0.125, $size[3] * 0.175)
+		Local $installok = GUICtrlCreateButton("OK", $size[2] * 0.28, $size[3] * 0.55, $size[2] * 0.125, $size[3] * 0.175)
+		GUICtrlSetFont(-1, 10, $FW_EXTRALIGHT, 0, "Candara", 2)
+		GUICtrlSetTip(-1, "Once done, click here.")
+
+		Local $testpos = GUICtrlCreateButton("Test", $size[2] * 0.55, $size[3] * 0.55, $size[2] * 0.15, $size[3] * 0.175)
 		GUICtrlSetFont(-1, 10, $FW_EXTRALIGHT, 0, "Candara", 2)
 		GUICtrlSetTip(-1, "Once done, click here.")
 
@@ -159,6 +164,11 @@ Func defineposition()
 				  _FileWriteToLine(@ScriptDir & "\NetworkCount.cfg", 4, GUICtrlRead($toptx), True, True)
 				  MsgBox($MB_OK, "Success", "Changes Svaed!" &@CRLF& "Restart application")
 				  Return
+
+			   Case $testpos
+				  $left = GUICtrlRead($lefttx)
+				  $right = GUICtrlRead($toptx)
+				  move()
 			EndSwitch
 
 		Until $n = $GUI_EVENT_CLOSE
@@ -166,7 +176,7 @@ Func defineposition()
 	Else
 		_FileWriteToLine(@ScriptDir & "\NetworkCount.cfg", 3, 1040, True, True)
 		_FileWriteToLine(@ScriptDir & "\NetworkCount.cfg", 4, 565, True, True)
-		MsgBox($MB_OK, "Success", "Changes Svaed!" &@CRLF& "Restart application")
+		MsgBox($MB_OK, "Success", "Changes Saved!" &@CRLF& "Restart application")
 		Return
 	EndIf
 
