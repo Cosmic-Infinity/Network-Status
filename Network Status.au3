@@ -20,7 +20,8 @@
 Global $count = 0
 Global $wifidiag = ""
 Global $left = 1040
-Global $right = 565
+Global $right = 565 ;below taskbar, useful if you have a transparent taskbar
+;Global $right = 540 above taskbar, useful if you have the normal windows taskbar
 ;Global $active = ControlGetHandle("[ACTIVE]",'','')
 main()
 move()
